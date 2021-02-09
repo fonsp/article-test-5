@@ -1,0 +1,26 @@
+name: Spring 21 - Export Pluto notebooks & Deploy
+on:
+    push:
+        branches:
+            - oranges
+    workflow_dispatch:
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Checkout apples
+              uses: actions/checkout@v2
+              with:
+                  path: apples
+                  ref: apples
+
+            - name: Build and Deploy
+              uses: JamesIves/github-pages-deploy-action@releases/v3
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  BRANCH: combined
+                  FOLDER: .
